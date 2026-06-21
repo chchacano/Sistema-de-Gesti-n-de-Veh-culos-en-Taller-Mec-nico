@@ -1,4 +1,5 @@
-reservas = []
+
+lista_reservas = []
 
 
 def validar_strings(cadena):
@@ -14,6 +15,7 @@ def total(noches, valor_noche):
     return noches * valor_noche
 
 def categoria_(total):
+    
     if total < 200000:
         return "Economica"
     elif 200000 <= total <= 500000:
@@ -25,18 +27,28 @@ def registrar_reserva():
 
     print("=== Registro Reserva ===")
 
-    codigo = input("Ingrese Codigo: ")
-    nombre = input("Ingrese Nombre: ")
-    noches = int(input("Ingrese Noches de Estadia: "))
-    valor_noche = int(input("Ingrese Valor Noches: "))
-
+    codigo = input("Ingrese Codigo: ").strip()
+    
     if not validar_strings(codigo):
         print("Codigo no debe ir vacio, reintente.")
         return
+    
 
+    nombre = input("Ingrese Nombre: ")
     if not validar_strings(nombre):
         print("Nombre no debe ir Vacio, reintente.")
         return
+    
+    
+    try:
+        noches = int(input("Ingrese Noches de Estadia: "))
+    except ValueError:
+        print("Cantidad noches mayores a 0")
+    
+    try:
+        valor_noche = int(input("Ingrese Valor Noches: "))
+    except ValueError:
+        print("Valor debe ser mayor a 0")
     
     if not mayor_zero(noches):
         print("Noches debe ser mayor a 0, reintente.")
@@ -56,8 +68,54 @@ def registrar_reserva():
                     "categoria":categoria
                     }
     
-    reservas.append(nuevaReserva)
-    print(reservas)
+    lista_reservas.append(nuevaReserva)
+    print(lista_reservas)
+
+def buscar_reserva(lista):
+    
+    if len(lista) == 0 or lista == []:
+        print("Primero registre una reserva.")
+        return
+    
+    buscarCodigo = input("Ingrese codigo a buscar: ").strip()
+
+    if not validar_strings(buscarCodigo):
+        print("Ingrese codigo valido")
+
+    for reserva in lista:
+        if reserva["codigo"] == buscarCodigo:
+            i = lista.index(reserva)
+            x = f"""CODIGO:{reserva["codigo"]}
+NOMBRE: {reserva["nombre"]}
+CANTIDAD NOCHES: {reserva["noches"]}
+VALOR POR NOCHE: {reserva["valor"]}
+VALOR TOTAL: {reserva["total"]}
+CATEGORIA: {reserva["categoria"]}
+"""
+            return print("\nPOSICION:",i), print(x)
+        else:
+            print("Reserva no encontrada.")
+            return
+        
+def actualizar_reservas(lista):
+
+    if len(lista) == 0 or lista == []:
+        print("Primero registre una reserva.")
+        return
+    
+    buscarCodigo = input("Ingrese codigo a buscar: ").strip()
+
+    if not validar_strings(buscarCodigo):
+        print("Ingrese codigo valido")
+
+    for reserva in lista:
+        if reserva["codigo"] == buscarCodigo:
+            pass
+
+
+
+
 
 registrar_reserva()
+buscar_reserva(lista_reservas)
 
