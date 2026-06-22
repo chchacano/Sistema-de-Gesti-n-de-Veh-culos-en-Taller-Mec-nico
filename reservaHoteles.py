@@ -1,5 +1,6 @@
 
 lista_reservas = []
+actualizado = False
 
 
 def validar_strings(cadena):
@@ -79,15 +80,17 @@ def buscar_reserva(lista):
         print("Primero registre una reserva.")
         return
     
+    
     buscarCodigo = input("Ingrese codigo a buscar: ").strip()
-
+    
+    
     if not validar_strings(buscarCodigo):
         print("Ingrese codigo valido")
 
     for reserva in lista:
         if reserva["codigo"] == buscarCodigo:
             i = lista.index(reserva)
-            x = f"""CODIGO:{reserva["codigo"]}
+            x = f"""CODIGO: {reserva["codigo"]}
 NOMBRE: {reserva["nombre"]}
 CANTIDAD NOCHES: {reserva["noches"]}
 VALOR POR NOCHE: {reserva["valor"]}
@@ -113,11 +116,29 @@ def actualizar_reservas(lista):
         print("Ingrese codigo valido")
 
     for reserva in lista:
+        
         if reserva["codigo"] == buscarCodigo:
             print(f"Reserva ´",str({reserva["codigo"]}),"´ encontrada.")
+
             nuevoNombre = input("Ingrese nuevo nombre: ")
-            nuevaCantidadNoche = int(input("Ingrese nueva cantidad de noche: "))
-            nuevaValorNoche = int(input("Ingrese nuevo valor por noche: "))
+            if not validar_strings(nuevoNombre):
+                print("Nuevo nombre no debe estar vacio.")
+                return
+            try:
+                nuevaCantidadNoche = int(input("Ingrese nueva cantidad de noche: "))
+            except ValueError:
+                print("Ingrese solo numeros mayor a 0.")
+            if not validar_noches(nuevaCantidadNoche):
+                print("Nueva cantidad debe ser mayor a 0.")
+                return
+            try:
+                nuevaValorNoche = int(input("Ingrese nuevo valor por noche: "))
+            except ValueError:
+                print("Ingrese solo numeros mayor a 0")
+            if not mayor_zero(nuevaValorNoche):
+                print("Nuevo valor debe ser Mayor a 0.")
+                return
+            
             nueva_total_reserva = total(nuevaCantidadNoche, nuevaValorNoche)
             nueva_categoria = categoria_(nueva_total_reserva)
             reserva["nombre"] = nuevoNombre
@@ -125,11 +146,16 @@ def actualizar_reservas(lista):
             reserva["valor"] = nuevaValorNoche
             reserva["total"] = nueva_total_reserva
             reserva["categoria"] = nueva_categoria
-        else:
-            print("Reserva no encontrada.")
-            return
+            actualizado = True
 
-    return print("Lista Actualizada: ",lista)
+            if actualizado:
+                return print("Lista Actualizada",lista)
+            
+        
+    print("Reserva no encontrada.")
+    
+     
+    
 
             
 
@@ -138,6 +164,7 @@ def actualizar_reservas(lista):
 
 
 
+registrar_reserva()
 registrar_reserva()
 
 actualizar_reservas(lista_reservas)
