@@ -95,7 +95,7 @@ VALOR TOTAL: {reserva["total"]}
 CATEGORIA: {reserva["categoria"]}
 """
             return print("\nPOSICION:",i), print(x)
-        else:
+    else:
             print("Reserva no encontrada.")
             return
         
@@ -125,6 +125,9 @@ def actualizar_reservas(lista):
             reserva["valor"] = nuevaValorNoche
             reserva["total"] = nueva_total_reserva
             reserva["categoria"] = nueva_categoria
+        else:
+            print("Reserva no encontrada.")
+            return
 
     return print("Lista Actualizada: ",lista)
 
@@ -136,5 +139,6 @@ def actualizar_reservas(lista):
 
 
 registrar_reserva()
-#buscar_reserva(lista_reservas)
+
 actualizar_reservas(lista_reservas)
+buscar_reserva(lista_reservas)
