@@ -25,7 +25,7 @@ def categoria_(total):
 
 def registrar_reserva():
 
-    print("=== Registro Reserva ===")
+    print("\n=== Registro Reserva ===")
 
     codigo = input("Ingrese Codigo: ").strip()
     
@@ -72,6 +72,8 @@ def registrar_reserva():
     print(lista_reservas)
 
 def buscar_reserva(lista):
+
+    print("\n=== Buscar Reserva ===")
     
     if len(lista) == 0 or lista == []:
         print("Primero registre una reserva.")
@@ -99,6 +101,8 @@ CATEGORIA: {reserva["categoria"]}
         
 def actualizar_reservas(lista):
 
+    print("\n=== Actualizar Reserva ===")
+
     if len(lista) == 0 or lista == []:
         print("Primero registre una reserva.")
         return
@@ -110,12 +114,27 @@ def actualizar_reservas(lista):
 
     for reserva in lista:
         if reserva["codigo"] == buscarCodigo:
-            pass
+            print(f"Reserva ´",str({reserva["codigo"]}),"´ encontrada.")
+            nuevoNombre = input("Ingrese nuevo nombre: ")
+            nuevaCantidadNoche = int(input("Ingrese nueva cantidad de noche: "))
+            nuevaValorNoche = int(input("Ingrese nuevo valor por noche: "))
+            nueva_total_reserva = total(nuevaCantidadNoche, nuevaValorNoche)
+            nueva_categoria = categoria_(nueva_total_reserva)
+            reserva["nombre"] = nuevoNombre
+            reserva["noches"] = nuevaCantidadNoche
+            reserva["valor"] = nuevaValorNoche
+            reserva["total"] = nueva_total_reserva
+            reserva["categoria"] = nueva_categoria
+
+    return print("Lista Actualizada: ",lista)
+
+            
+
 
 
 
 
 
 registrar_reserva()
-buscar_reserva(lista_reservas)
-
+#buscar_reserva(lista_reservas)
+actualizar_reservas(lista_reservas)
